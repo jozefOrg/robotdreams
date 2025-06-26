@@ -11,10 +11,10 @@ client = OpenAI(
 ## Moja sprava
 user_message = "Spocitaj mi kolko je 100 krat 4"
 
-# System prompt
+## System prompt
 system_prompt = "Si inteligentny asistent, ktory dokaze vykonavat matematicke vypocty. Ak potrebujes vykonat vypocet, pouzi nastroj 'calculator' vo formate TOOL: calculator(...)."
 
-# 3. LLM call - navrh vypoctu
+## LLM call - navrh vypoctu
 response = client.chat.completions.create(
     model="gpt-4",
     messages=[
@@ -26,7 +26,7 @@ response = client.chat.completions.create(
 assistant_reply = response.choices[0].message.content
 print("Assistant reply:", assistant_reply)
 
-# 4. Extrahuj výrazy typu TOOL: calculator(...)
+## Extrakcia vypoctu z odpovede LLM
 import re
 
 match = re.search(r'TOOL:\s*calculator\((.*?)\)', assistant_reply)
@@ -36,7 +36,7 @@ if match:
         result = eval(expression)
         print("Vypocet:", expression, "=", result)
 
-        # 5. Spat do LLM
+        ## Spat do LLM
         followup = client.chat.completions.create(
             model="gpt-4",
             messages=[
@@ -51,4 +51,4 @@ if match:
     except Exception as e:
         print("Chyba:", e)
 else:
-    print("Ziadny vypocet nebol detekovany.")
+    print("Ziadny vypocet nie je k dispozicii.")
