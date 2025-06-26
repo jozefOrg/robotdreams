@@ -22,7 +22,7 @@ response2 = client.chat.completions.create(
     model="gpt-4o",
     messages=[
         {"role": "system", "content": "You are a helpful assistant that tells jokes."},
-        {"role": "user", "content": "Hi, tell me 2 different short jokes"}
+        {"role": "user", "content": "Hi, tell me 3 different short jokes"}
     ]
 )
 
